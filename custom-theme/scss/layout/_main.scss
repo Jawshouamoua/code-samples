@@ -1,0 +1,39 @@
+// Non-modular or client styles for the .l-content region.
+
+.l-content {
+  .block-spsdga-content {
+    .cell {
+      margin-bottom: $spacing;
+    }
+  }
+}
+
+.full-width,
+.content {
+  margin-bottom: $double-spacing;
+}
+
+#full-width-2 {
+  padding: $double-spacing 0;
+}
+
+main section {
+  margin-bottom: $double-spacing;
+
+  &:empty {
+    margin-bottom: 0;
+  }
+}
+
+.block-page-title-block {
+  margin-bottom: $spacing;
+}
+
+.block-spsdga-breadcrumbs {
+  margin-bottom: 0;
+  padding: $half-spacing 0;
+}
+
+.course-details {
+  margin-top: $spacing;
+}

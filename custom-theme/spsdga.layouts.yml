@@ -1,0 +1,22 @@
+spsdga_one_col:
+  label: 'One column in container'
+  category: 'SPSDGA layouts'
+  template: templates/panels/spsdga_one_col
+  default_region: main
+  regions:
+    main:
+      label: Main content
+spsdga_full_width:
+  label: 'Full Width'
+  category: 'SPSDGA layouts'
+  template: templates/panels/spsdga_full_width
+  default_region: main
+  regions:
+    full_width:
+      label: Full Width
+    main:
+      label: Main content
+    full_width_2:
+      label: Full Width 2
+    main_2:
+      label: Main content 2

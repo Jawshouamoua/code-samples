@@ -1,0 +1,7 @@
+@include breakpoint(small down) {
+  .is-dropdown-submenu {
+    border: none;
+    padding-left: 1em;
+    position: static;
+  }
+}

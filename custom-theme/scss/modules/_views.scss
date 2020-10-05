@@ -1,0 +1,35 @@
+.block-views {
+  .more-link {
+    a {
+      @include button();
+    }
+  }
+}
+
+.media--background {
+  padding-bottom: 600px;
+  background-position: center 60%;
+}
+
+.block-views-blocksponsors-block-homepage {
+  .field-name-field-sponsor-logo {
+    border: 1px solid $dark-gray;
+    background-color: $white;
+    display: inline-block;
+    margin-bottom: $spacing;
+    padding: $half-spacing;
+  }
+
+  @include breakpoint(medium) {
+    .field-name-field-sponsor-logo {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.slick--view--homepage-slideshow {
+  .slick__slide {
+    max-height: 100vh;
+    background: transparent;
+  }
+}

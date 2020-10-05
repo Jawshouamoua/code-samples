@@ -1,0 +1,17 @@
+global:
+  version: 0.1
+  css:
+    base:
+      css/styles.css: {}
+  js:
+    js/scripts.js: {}
+
+fonts:
+  css:
+    theme:
+      'https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,400i,700': { type: external }
+
+truncate:
+  version: version
+  js:
+    js/truncate.js: {}

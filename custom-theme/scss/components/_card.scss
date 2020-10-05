@@ -1,0 +1,49 @@
+.card {
+  a {
+    margin-top: $spacing;
+  }
+}
+
+.sponsor-card {
+  @include transition();
+  background: $white;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  padding: $spacing;
+
+  > * {
+    align-self: center;
+    width: 100%;
+  }
+
+  .node-title {
+    @include transition();
+    margin-top: $spacing;
+  }
+
+  &:hover {
+    border: 1px solid $light-gray;
+    box-shadow: 2px 2px 10px 2px $light-gray;
+  }
+
+  @include breakpoint(medium) {
+    opacity: 0.7;
+
+    &:hover {
+      opacity: 1;
+
+      .node-title {
+        @include transition();
+        margin-top: $spacing;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    .node-title {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}

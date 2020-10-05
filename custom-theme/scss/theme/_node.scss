@@ -1,0 +1,57 @@
+.node--type-event {
+
+  .bg-gray {
+    padding: $spacing;
+  }
+
+  .event__metadata {
+    .field {
+      margin-bottom: $spacing;
+    }
+  }
+
+  .field-name-field-event-image {
+    text-align: center;
+  }
+
+  .paragraph--type--date-paragraph {
+    .field-paragraph--field-date {
+      font-size: rem-calc(18px);
+      font-weight: $global-weight-bold;
+    }
+
+    .field-paragraph--field-time-details {
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.field-name-field-course,
+.field-name-field-event-alt-location {
+  font-weight: $global-weight-bold;
+}
+
+.node--type-course {
+  .section__content--header {
+    position: relative;
+  }
+
+  .section__content--title {
+    background: $gray-transparent;
+    border-bottom: 3px solid $spsdga-dark-green;
+    bottom: $spacing;
+    padding: $spacing ($double-spacing * 2) $spacing $spacing;
+    position: absolute;
+  }
+
+  .course__metadata {
+    padding: $spacing;
+    margin-bottom: $spacing;
+
+    .field-label {
+      font-weight: $global-weight-bold;
+    }
+  }
+}
