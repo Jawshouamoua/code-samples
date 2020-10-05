@@ -1,0 +1,31 @@
+{% extends "/themes/contrib/base_theme/templates/block/block.html.twig" %}
+
+{% set attributes = attributes.addClass('c-accordion', 'c-' ~ theme_abbv ~ '-accordion') %}
+{% set open_state = default_open ? 'display:block;' : 'display:none;' %}
+{% set view_all_collapse = 'Close All'|t %}
+{% set view_all_expand = 'View All'|t %}
+
+{% block content %}
+  {{ attach_library('atge_components_accordion/accordion') }}
+  <div class="c-accordion__items c-accordion__items paragraph paragraph--type--atge-accordion paragraph--view-mode--default c-atge-accordion c-atge-accordion--default">
+    <div>
+      <h2 class="p-accordion--heading p-atge-accordion--heading p-heading">{{ category }}
+        <a class="accordion-view-all" data-expanded="{{ default_open ? 'true' : 'false' }}" data-expand-text="{{ view_all_expand }}" data-collapse-text="{{ view_all_collapse }}">{{ default_open ? view_all_collapse : view_all_expand }}</a>
+    </h2>
+  </div>
+      <div class="c-accordion__items--parent c-accordion__items--parent">
+      {% for key, subcategory in subcategories %}
+        <div class="p-accordion__item p-accordion__item paragraph paragraph--type--atge-accordion-item paragraph--view-mode--default c-atge-accordion-item c-atge-accordion-item--default c-accordion--{{ default_open ? 'expanded' : 'collapsed' }}">
+          <div class="p-accordion__item--heading p-accordion__item--heading">{{ subcategory.name }} <span class="icon icon-{{ default_open ? 'minus' : 'plus' }}"></span></div>
+
+          <div class="p-accordion__item--body p-accordion__item--body" style="{{ open_state }}">
+            {% for question in subcategory.questions %}
+              <strong>{{ question.question }}</strong>
+              {{ question.answer | raw }}
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

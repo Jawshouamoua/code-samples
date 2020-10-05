@@ -1,0 +1,20 @@
+{% extends "/themes/contrib/base_theme/templates/block/block.html.twig" %}
+
+{% block content %}
+  <div class="faqs-search-header">
+    <div class="e-background-image e-background-image--large" style="background-image: url('{{ background_image_url }}')"></div>
+    <div class="e-background-image e-background-image--small" style="background-image: url('{{ mobile_background_image_url }}')"></div>
+    <div class="faqs-search-header__content">
+      <div class="grid__container">
+        <div class="grid__container--items">
+          <div class="faqs-search-header__body">
+            <h1 class="faqs-search-header__heading">{{ 'Hello, how can we help?'|t }}</h1>
+            {{ form }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+

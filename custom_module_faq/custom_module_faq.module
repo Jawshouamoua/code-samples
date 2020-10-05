@@ -1,0 +1,135 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Render\FormattableMarkup;
+
+/**
+ * Implements hook_theme().
+ */
+function custom_module_faq_theme($existing, $type, $theme, $path) {
+  return [
+    'faq_category_block' => [
+      'variables' => [
+        'subcategories' => NULL,
+        'category' => NULL,
+        'default_open' => NULL,
+      ],
+      'template' => 'block--faq-category',
+    ],
+    'faq_category_grid_block' => [
+      'variables' => [
+        'categories' => NULL,
+      ],
+      'template' => 'block--faq-category-grid',
+    ],
+    'faq_category_search_block' => [
+      'variables' => [
+        'form' => NULL,
+        'background_image_url' => NULL,
+        'mobile_background_image_url' => NULL,
+      ],
+      'template' => 'block--faq-search',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function custom_module_faq_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+  $manager = \Drupal::entityTypeManager();
+
+  $viewid = $view->id();
+  $viewDiesplay = $view->current_display;
+
+  if ($view->id() == 'faq_search' && $view->current_display == 'faq_search_page') {
+    $block = $manager->getStorage('block_content')->loadByProperties(
+      [
+        'info' => 'Global Search Heading',
+      ]
+    );
+    if (!empty($block)) {
+      $block = reset($block);
+    }
+    // Fall back if there is no such block.
+    if (!$block instanceof BlockContent) {
+      return;
+    }
+    $block_content = $manager
+      ->getViewBuilder('block_content')
+      ->view($block);
+    $variables['heading_block'] = \Drupal::service('renderer')->renderRoot($block_content);
+  }
+
+}
+
+function custom_module_faq_views_pre_execute($view) {
+  if ($view->id() == 'faq_search') {
+    $view->get_total_rows = TRUE;
+    if ($view->current_display == 'faq_search_page') {
+      if (empty($view->exposed_raw_input['search'])) {
+        $view->empty['area']->options['content']['value'] = '';
+      }
+    }
+  }
+}
+
+function custom_module_faq_views_pre_render($view) {
+  if ($view->id() == 'faq_search' && $view->current_display == 'faq_search_page') {
+    // Build the default result summary.
+    $empty_result = '0';
+    $result = new FormattableMarkup('<div class="search-results">@total results for <q>@results</q></div>', [
+      '@results' => @$view->exposed_raw_input['search'] ?: '',
+      '@total' => $view->total_rows ?: '0',
+    ]);
+    $no_results = $result;
+
+
+    if ($view->total_rows > 0) {
+      $view->header['area']->options['content']['value'] = t('@result',
+        ['@result' => $result]);
+      $view->empty['area']->options['content']['value'] = t('@result',
+        ['@result' => $result]);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_region().
+ */
+function custom_module_faq_preprocess_region(&$variables) {
+  // Check if we are on global search page.
+  $routeObject = \Drupal::routeMatch()->getRouteObject();
+  $view_id = NULL;
+  $display_id = NULL;
+  if ($routeObject) {
+    // Get view id and display id from route.
+    $view_id = $routeObject->getDefault('view_id');
+    $display_id = $routeObject->getDefault('display_id');
+    if (($view_id !== 'faq_search') || ($display_id !== 'faq_search_page')) {
+      return;
+    }
+  }
+  // Move messages into Hero region on top.
+  if ($variables['elements']['#region'] == 'hero') {
+
+    $messenger = \Drupal::service('messenger');
+    $renderer = \Drupal::service('renderer');
+    $messages = $messenger->messagesByType('error');
+    if (!empty($messages)) {
+      $error['error'] = $messages;
+      $element = [
+        '#theme' => 'status_messages',
+        '#message_list' => $error,
+        '#status_headings' => [
+          'error' => t('Error message'),
+        ],
+      ];
+      // Retrieve and remove all messages.
+      $variables['error_message']['#markup'] = $renderer->render($element);
+      $messenger->deleteByType('error');
+    }
+  }
+}
+

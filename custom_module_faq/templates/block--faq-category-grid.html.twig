@@ -1,0 +1,16 @@
+{% extends "/themes/contrib/base_theme/templates/block/block.html.twig" %}
+
+{% block content %}
+  <div class="c-grid--standard">
+    <div class="c-grid__items c-grid__layout--threecol c-grid-faqs">
+    {% for category in categories %}
+      <div class="c-grid__item">
+        <a class="c-grid-faqs__link" href="{{ category.link }}">
+          <div class="c-grid-faqs__icon {{ category.icon }}"></div>
+          <div class="h4 c-grid-faqs__header">{{ category.name }}</div>
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+{% endblock %}
